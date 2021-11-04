@@ -290,32 +290,47 @@ const winConditionCheck = () => {
 
 const botMove = () => {
    let allPossibleMoves = [];
+   let goodMoves = [];
 
    for(const square in board.position()){
       if(playersColor === 'whites'){
          if(board.position()[square][0] === 'b'){
             let possibleTargetSquaresForPiece = determinePossibleBotMoves(board.position()[square], square);
 
-            possibleTargetSquaresForPiece.forEach(targetSq => {
-               let possibleMove = `${square}-${targetSq}`;
-               allPossibleMoves.push(possibleMove);
+            possibleTargetSquaresForPiece.forEach(potentialTarget => {
+               if(!isSquareEmpty(potentialTarget) && checkColorOfPiece(potentialTarget) === 'white'){
+                  let goodMove = `${square}-${potentialTarget}`;
+                  goodMoves.push(goodMove);
+               }else if(isSquareEmpty(potentialTarget)){
+                  let possibleMove = `${square}-${potentialTarget}`;
+                  allPossibleMoves.push(possibleMove);
+               }
             });
          }
       }else if(playersColor === 'blacks'){
          if(board.position()[square][0] === 'w'){
             let possibleTargetSquaresForPiece = determinePossibleBotMoves(board.position()[square], square);
 
-            possibleTargetSquaresForPiece.forEach(targetSq => {
-               let possibleMove = `${square}-${targetSq}`;
-               allPossibleMoves.push(possibleMove);
+            possibleTargetSquaresForPiece.forEach(potentialTarget => {
+               if(!isSquareEmpty(potentialTarget) && checkColorOfPiece(potentialTarget) === 'black'){
+                  let goodMove = `${square}-${potentialTarget}`;
+                  goodMoves.push(goodMove);
+               }else if(isSquareEmpty(potentialTarget)){
+                  let possibleMove = `${square}-${potentialTarget}`;
+                  allPossibleMoves.push(possibleMove);
+               }
             });
          }
       }
    }
 
-   let chosenIndex = Math.floor(Math.random() * allPossibleMoves.length);
-
-   board.move(allPossibleMoves[chosenIndex]);
+   if(goodMoves.length === 0){
+      let chosenIndex = Math.floor(Math.random() * allPossibleMoves.length);
+      board.move(allPossibleMoves[chosenIndex]);
+   }else if(goodMoves.length > 0){
+      let chosenIndex = Math.floor(Math.random() * goodMoves.length);
+      board.move(goodMoves[chosenIndex]);
+   }
 
    winConditionCheck();
    pawnPromotionCheck();

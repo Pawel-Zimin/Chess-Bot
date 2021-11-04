@@ -1,0 +1,19 @@
+{
+  "name": "chess-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pawel-Zimin/Chess-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pawel-Zimin/Chess-Bot/issues"
+  },
+  "homepage": "https://github.com/Pawel-Zimin/Chess-Bot#readme"
+}

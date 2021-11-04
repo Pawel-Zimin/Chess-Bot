@@ -74,21 +74,18 @@ const determinePossibleBotMoves = (piece, currPos) => {
    if(playersColor === 'blacks'){
       switch(piece){
          case 'wP':
-            if(y !== 8){
-               let wPsquareForward = arrPosToString([x, y + 1]);
+            let wPsquareForward = arrPosToString([x, y + 1]);
+            let wPcaptureRight = arrPosToString([x + 1, y + 1]);
+            let wPcaptureLeft = arrPosToString([x - 1, y + 1]);
+
+            if(!isSquareEmpty(wPcaptureRight) && checkColorOfPiece(wPcaptureRight) === 'black'){
+               possibleBotMovesArr.push(wPcaptureRight);
+            }else if(!isSquareEmpty(wPcaptureLeft) && checkColorOfPiece(wPcaptureLeft) === 'black'){
+               possibleBotMovesArr.push(wPcaptureLeft);
+            }else if(y !== 8){
                if(isSquareEmpty(wPsquareForward)){
                   possibleBotMovesArr.push(wPsquareForward);
                }
-            }
-
-            let wPcaptureRight = arrPosToString([x + 1, y + 1]);
-            if(!isSquareEmpty(wPcaptureRight) && checkColorOfPiece(wPcaptureRight) === 'black'){
-               possibleBotMovesArr.push(wPcaptureRight);
-            }
-            
-            let wPcaptureLeft = arrPosToString([x - 1, y + 1]);
-            if(!isSquareEmpty(wPcaptureLeft) && checkColorOfPiece(wPcaptureLeft) === 'black'){
-               possibleBotMovesArr.push(wPcaptureLeft);
             }
    
             break;
@@ -164,23 +161,20 @@ const determinePossibleBotMoves = (piece, currPos) => {
    }else if(playersColor === 'whites'){
       switch(piece){
          case 'bP':
-            if(y !== 1){
-               let bPsquareForward = arrPosToString([x, y - 1]);
+            let bPsquareForward = arrPosToString([x, y - 1]);
+            let bPcaptureRight = arrPosToString([x + 1, y - 1]);
+            let bPcaptureLeft = arrPosToString([x - 1, y - 1]);
+
+            if(!isSquareEmpty(bPcaptureRight) && checkColorOfPiece(bPcaptureRight) === 'white'){
+               possibleBotMovesArr.push(bPcaptureRight);
+            }else if(!isSquareEmpty(bPcaptureLeft) && checkColorOfPiece(bPcaptureLeft) === 'white'){
+               possibleBotMovesArr.push(bPcaptureLeft);
+            }else if(y !== 1){
                if(isSquareEmpty(bPsquareForward)){
                   possibleBotMovesArr.push(bPsquareForward);
                }
             }
-   
-            let bPcaptureRight = arrPosToString([x + 1, y - 1]);
-            if(!isSquareEmpty(bPcaptureRight) && checkColorOfPiece(bPcaptureRight) === 'white'){
-               possibleBotMovesArr.push(bPcaptureRight);
-            }
-            
-            let bPcaptureLeft = arrPosToString([x - 1, y - 1]);
-            if(!isSquareEmpty(bPcaptureLeft) && checkColorOfPiece(bPcaptureLeft) === 'white'){
-               possibleBotMovesArr.push(bPcaptureLeft);
-            }
-   
+
             break;
          case 'bQ':
             if(y !== 1){
@@ -295,7 +289,6 @@ const winConditionCheck = () => {
 }
 
 const botMove = () => {
-   let allPossibleTargetSquares = [];
    let allPossibleMoves = [];
 
    for(const square in board.position()){
@@ -307,8 +300,6 @@ const botMove = () => {
                let possibleMove = `${square}-${targetSq}`;
                allPossibleMoves.push(possibleMove);
             });
-
-            allPossibleTargetSquares.push.apply(allPossibleTargetSquares, possibleTargetSquaresForPiece);
          }
       }else if(playersColor === 'blacks'){
          if(board.position()[square][0] === 'w'){
@@ -318,8 +309,6 @@ const botMove = () => {
                let possibleMove = `${square}-${targetSq}`;
                allPossibleMoves.push(possibleMove);
             });
-
-            allPossibleTargetSquares.push.apply(allPossibleTargetSquares, possibleTargetSquaresForPiece);
          }
       }
    }

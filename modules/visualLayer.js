@@ -1,4 +1,4 @@
-import { stringPosToArr, arrPosToString, isSquareEmpty, checkColorOfPiece, determinePlayerColorChoice } from './helperFuctions.js';
+import { stringPosToArr, arrPosToString, isSquareEmpty, checkColorOfPiece } from './helperFuctions.js';
 import { playersColor } from '../index.js';
 
 const whiteSquareGrey = '#a9a9a9';
